@@ -1,0 +1,58 @@
+ class ListNode {
+  val: number
+  next: ListNode | null
+  constructor(val?: number, next?: ListNode | null) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+    }
+ }
+ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
+  let dummy = new ListNode(0)
+  console.log(JSON.stringify(dummy))
+
+  let cur = dummy
+
+  let carry:number = 0
+  while(l1 !== null || l2 !== null || carry === 1){
+    console.log('running the Loop')
+    let v1 = (l1 != null && l1.val !== null) ? l1.val : 0
+    console.log('v1: ' + v1)
+    let v2 = (l2 != null && l2.val !== null) ? l2.val : 0
+    console.log('v2: ' + v2)
+
+    let val = v1 + v2 + carry
+    console.log('val: ' + val)
+    carry = Math.trunc(val / 10)
+    console.log('carry: ' + carry)
+    val = val % 10
+    cur.next = new ListNode(val)
+
+    cur = cur.next
+    l1 = (l1 != null && l1.next !== null) ? l1.next : null
+    console.log('l1: ' + l1)
+    l2 = (l2 != null && l2.next !== null) ? l2.next : null
+    console.log('l2: ' + l2)
+  }
+  return dummy.next
+}
+
+function listToListNode (listItem: number[]): ListNode | null{
+  if(listItem.length < 1){
+    return null
+  }else{
+    let cur = listItem.shift()
+    let node = listToListNode(listItem)
+    return new ListNode(cur,node)
+  }
+}
+
+const l1 = [2,4,5]
+const l2 = [5,6,4]
+
+const l1ListNode = listToListNode(l1)
+const l2ListNode = listToListNode(l2)
+// console.log(JSON.stringify(l1ListNode))
+
+const addedNumbers = addTwoNumbers(l1ListNode,l2ListNode)
+console.log(JSON.stringify(addedNumbers))
+
